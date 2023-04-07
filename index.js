@@ -18,7 +18,7 @@ app.get("/getsolr/:keyword", async (req, res) => {
   try {
     const data = await sendRequestGetJson(
       `http://localhost:8983/solr/BotanicalProject/select?q=_text_:` +
-        keyword + `&rows=20` +
+        keyword + `&rows=50` +
         `&q.op=OR&indent=true&facet=true&facet.field=author&facet.field=publisher&facet.mincount=1&wt=json`
     );
 
