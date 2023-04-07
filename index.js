@@ -17,7 +17,7 @@ app.get("/getsolr/:keyword", async (req, res) => {
   const keyword = req.params.keyword;
   try {
     const data = await sendRequestGetJson(
-      `http://127.0.0.1:8983/solr/BotanicalProject/select?q=_text_:` +
+      `http://localhost:8983/solr/BotanicalProject/select?q=_text_:` +
         keyword + `&rows=20` +
         `&q.op=OR&indent=true&facet=true&facet.field=author&facet.field=publisher&facet.mincount=1&wt=json`
     );
@@ -29,37 +29,23 @@ app.get("/getsolr/:keyword", async (req, res) => {
     });
   }
 });
+
 app.get("/getbyid/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    // Here, you would use your data source to retrieve the plant record by its ID
-    // In this example, I'm just returning a mock data object
-    const plant = {
-      id: "b000102",
-      name: "รางจืด",
-      scientific_name: "Thunbergia laurifolia Lindl",
-      family_name: "acanthaceae",
-      othername: "-",
-      character: "-",
-      botanical_characteristics: "-",
-      flowering_period: "-",
-      properties:
-        "ใบและราก ปรุงเป็นยาถอนพิษไข้ พอกบาดแผลรักษาแผลไฟไหม้ น้ำร้อนลวก รากและเถา แก้ร้อนใน แก้กระหายน้ำ",
-    };
+    const data = await sendRequestGetJson(
+      `http://localhost:8983/solr/BotanicalProject/select?indent=true&q.op=OR&q=id%3A`+id
+    );
 
-    if (plant.id === id) {
-      res.status(200).json(plant);
-    } else {
-      res.status(404).json({
-        message: "Plant record not found",
-      });
-    }
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({
-      message: "Error retrieving plant record",
+      content: "",
     });
   }
 });
+
+
 
 
 //กรณีไม่พบ Method เปิดแจ้งเตือน
