@@ -17,7 +17,7 @@ app.get("/getsolr/:keyword", async (req, res) => {
   const keyword = req.params.keyword;
   try {
     const data = await sendRequestGetJson(
-      `http://localhost:8983/solr/BotanicalProject/select?q=_text_:` +
+      `http://localhost:8983/solr/NewBotanicalPJ/select?q=_text_:` +
         keyword + `&rows=50` +
         `&q.op=OR&indent=true&facet=true&facet.field=author&facet.field=publisher&facet.mincount=1&wt=json`
     );
@@ -34,7 +34,7 @@ app.get("/getbyid/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const data = await sendRequestGetJson(
-      `http://localhost:8983/solr/BotanicalProject/select?indent=true&q.op=OR&q=id%3A`+id
+      `http://localhost:8983/solr/NewBotanicalPJ/select?indent=true&q.op=OR&q=id%3A`+id
     );
 
     res.status(200).json(data);
